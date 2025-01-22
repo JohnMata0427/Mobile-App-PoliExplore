@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PoliExplore</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_camera">Cámara</string>
+    <string name="title_search">Buscar</string>
+    <string name="title_faq">FAQ</string>
 </resources>
