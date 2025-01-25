@@ -22,4 +22,11 @@
         android:name="com.jidasea.poliexplore.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.jidasea.poliexplore.ui.faq.HelpFragment"
+        android:label="Ayuda"
+        tools:layout="@layout/fragment_help" />
+
 </navigation>
