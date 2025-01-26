@@ -4,4 +4,6 @@
     <string name="title_camera">Cámara</string>
     <string name="title_search">Buscar</string>
     <string name="title_faq">FAQ</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="title_dashboard">Dashboard</string>
 </resources>

@@ -24,9 +24,16 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.jidasea.poliexplore.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
         android:id="@+id/helpFragment"
         android:name="com.jidasea.poliexplore.ui.faq.HelpFragment"
         android:label="Ayuda"
         tools:layout="@layout/fragment_help" />
+
 
 </navigation>
