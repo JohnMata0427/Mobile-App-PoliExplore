@@ -1,3 +1,3 @@
-package com.jidasea.poliexplore.ui.search
+package com.jidasea.poliexplore
 
 data class SearchResult(val numeroEdificio: String, val nombreEdificio: String)

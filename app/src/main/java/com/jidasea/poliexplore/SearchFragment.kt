@@ -1,17 +1,17 @@
-package com.jidasea.poliexplore.ui.search
+package com.jidasea.poliexplore
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jidasea.poliexplore.R
-import androidx.appcompat.widget.SearchView
+import com.jidasea.poliexplore.SearchResultsAdapter
 
 class SearchFragment : Fragment() {
-
     private lateinit var searchResultsRecyclerView: RecyclerView
     private lateinit var searchResultsAdapter: SearchResultsAdapter
     private val searchResults = listOf(
@@ -37,6 +37,7 @@ class SearchFragment : Fragment() {
                 return false
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
                 filteredResults.clear()
                 if (!newText.isNullOrEmpty()) {

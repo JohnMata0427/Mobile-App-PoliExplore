@@ -1,9 +1,6 @@
 <resources>
-    <string name="app_name">PoliExplore</string>
-    <string name="title_home">Inicio</string>
-    <string name="title_camera">Cámara</string>
-    <string name="title_search">Buscar</string>
-    <string name="title_faq">FAQ</string>
-    <string name="title_notifications">Notificaciones</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="app_name">Mobile App PoliExplore</string>
+    <string name="home">Fondo de pantalla de inicio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

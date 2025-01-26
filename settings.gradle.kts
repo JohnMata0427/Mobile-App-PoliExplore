@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PoliExplore"
+rootProject.name = "Mobile App PoliExplore"
 include(":app")
  

@@ -1,35 +1,55 @@
 package com.jidasea.poliexplore
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.jidasea.poliexplore.databinding.ActivityMainBinding
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        replaceFragment(HomeFragment())
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
 
-        val navView: BottomNavigationView = binding.navView
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_home -> {
+                    replaceFragment(HomeFragment())
+                    true
+                }
+                R.id.bottom_camera -> {
+                    replaceFragment(CameraFragment())
+                    true
+                }
+                R.id.bottom_search -> {
+                    replaceFragment(SearchFragment())
+                    true
+                }
+                R.id.bottom_faq -> {
+                    replaceFragment(FAQFragment())
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_search
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }
+
+
+
+
+
+
+
+
+
+
+

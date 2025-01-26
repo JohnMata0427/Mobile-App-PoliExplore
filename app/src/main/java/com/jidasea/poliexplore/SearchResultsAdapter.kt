@@ -1,4 +1,4 @@
-package com.jidasea.poliexplore.ui.search
+package com.jidasea.poliexplore
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jidasea.poliexplore.R
+import com.jidasea.poliexplore.SearchResult
 
 class SearchResultsAdapter(private val results: List<SearchResult>) :
     RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {

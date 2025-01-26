@@ -10,9 +10,9 @@
         android:id="@+id/numeroEdificio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_red_background"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="6dp"
+        android:background="@color/secondary"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
         android:text="Edificio 21"
         android:textColor="@color/white"
         android:textStyle="bold" />
