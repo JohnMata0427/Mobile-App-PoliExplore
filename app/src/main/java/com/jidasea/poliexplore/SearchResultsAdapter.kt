@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jidasea.poliexplore.R
 import com.jidasea.poliexplore.SearchResult
 
-class SearchResultsAdapter(private val results: List<SearchResult>) :
+class SearchResultsAdapter(private val results: List<Place>) :
     RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,8 +24,8 @@ class SearchResultsAdapter(private val results: List<SearchResult>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val result = results[position]
-        holder.numeroEdificio.text = result.numeroEdificio
-        holder.nombreEdificio.text = result.nombreEdificio
+        holder.numeroEdificio.text = result.id.toString()
+        holder.nombreEdificio.text = result.name
     }
 
     override fun getItemCount(): Int = results.size

@@ -7,24 +7,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jidasea.poliexplore.SearchResultsAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
     private lateinit var searchResultsRecyclerView: RecyclerView
     private lateinit var searchResultsAdapter: SearchResultsAdapter
-    private val searchResults = listOf(
-        SearchResult("Edificio 21", "Escuela de formacion de tecnologos"),
-        SearchResult("Edificio 22", "Facultad de Ingenieria"),
-        SearchResult("Edificio 23", "Biblioteca Central")
-    )
-    private var filteredResults = mutableListOf<SearchResult>()
+    private val _place = MutableLiveData<List<Place>?>()
+    val places: LiveData<List<Place>?> get() = _place
+    private val repository = PlaceRepository()
+    fun getAllPlaces() {
+        lifecycleScope.launch {
+            try {
+                val places = repository.getPlaces()
+                println(places)
+                _place.postValue(places)
+            } catch (e: Exception) {
+                println(e)
+                _place.postValue(null)
+            }
+        }
+    }
+    fun getPlaceById(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val place = repository.getPlaceById(id)
+                println(place)
+            } catch (e: Exception) {
+                println(e)
+            }
+        }
+    }
+
+    private lateinit var searchResults: List<Place>
+
+    private var filteredResults = mutableListOf<Place>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        places.observe(viewLifecycleOwner) {
+            searchResults = it ?: emptyList()
+        }
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         searchResultsRecyclerView = view.findViewById(R.id.searchResultsRecyclerView)
         searchResultsAdapter = SearchResultsAdapter(filteredResults)
@@ -43,7 +75,7 @@ class SearchFragment : Fragment() {
                 if (!newText.isNullOrEmpty()) {
                     val query = newText.lowercase()
                     filteredResults.addAll(searchResults.filter {
-                        it.numeroEdificio.lowercase().contains(query) || it.nombreEdificio.lowercase().contains(query)
+                        it.id.toString().lowercase().contains(query) || it.name.lowercase().contains(query)
                     })
                 }
                 searchResultsAdapter.notifyDataSetChanged()
