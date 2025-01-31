@@ -86,7 +86,7 @@
                         android:id="@+id/question_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="¿Cómo puedo registrar una cuenta?"
+                        android:text="¿Cómo funciona la app?"
                         android:padding="16dp"
                         android:textStyle="bold"
                         android:background="@color/secondary"
@@ -98,7 +98,7 @@
                         android:id="@+id/answer_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Puedes registrarte desde la pantalla principal en el botón 'Crear cuenta'."
+                        android:text="Pulsa en el icono de cámara presente en el Menú inferior. Una vez abierta la cámara aputa a un edificio de la EPN y mira la información. También puedes ingresar al icono de buscar e ingresar el edificio que deseas conocer"
                         android:visibility="gone"
                         android:padding="12dp" />
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:id="@+id/question_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="¿Cómo cambio mi contraseña?"
+                        android:text="No puedo ver mi cámara, ¿qué hago?"
                         android:padding="16dp"
                         android:textStyle="bold"
                         android:background="@color/secondary"
@@ -132,7 +132,7 @@
                         android:id="@+id/answer_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Desde la configuración de tu perfil, selecciona 'Cambiar contraseña'."
+                        android:text="Asegurate de que la app tenga permisos para acceder a la cámara. Puedes revisar esto en la configuración de tu dispositivo."
                         android:visibility="gone"
                         android:padding="12dp" />
                 </LinearLayout>
