@@ -1,13 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".BuildingDetailsFragment">
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:paddingBottom="10dp">
 
         <!-- Título -->
         <TextView
@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
-            android:text="Escuela de formación de Tecnologos"
+            android:text="Cargando información..."
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp"
@@ -47,8 +47,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/esfot" />
-
+            android:adjustViewBounds="true"
+            android:background="@color/tertiary"
+            />
 
         <!-- Etiqueta de edificio -->
         <TextView
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="15dp"
             android:paddingVertical="5dp"
-            android:text="Edificio 21"
+            android:text="Edificio ..."
             android:background="@color/secondary"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:background="@color/tertiary"
             android:padding="10dp"
-            android:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. p."
+            android:text="Cargando información..."
             app:layout_constraintTop_toBottomOf="@+id/description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,10 +127,10 @@
             android:layout_marginTop="16dp"
             android:background="@color/tertiary"
             android:padding="10dp"
-            android:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.  Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. p. Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto."
+            android:text="Cargando información..."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fun_facts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</ScrollView>

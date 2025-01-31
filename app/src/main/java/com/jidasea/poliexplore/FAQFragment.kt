@@ -17,6 +17,8 @@ class FAQFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val fragmentTitleTextView: TextView? = activity?.findViewById(R.id.fragment_title)
+        fragmentTitleTextView?.text = "Preguntas Frecuentes"
 
         val question1 = view.findViewById<TextView>(R.id.question_1)
         val question2 = view.findViewById<TextView>(R.id.question_2)

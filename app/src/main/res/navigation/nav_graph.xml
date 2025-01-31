@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.jidasea.poliexplore.SearchFragment"
+        android:label="Lista de Edificio">
+        <action
+            android:id="@+id/action_searchFragment_to_buildingDetailsFragment"
+            app:destination="@id/buildingDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buildingDetailsFragment"
+        android:name="com.jidasea.poliexplore.BuildingDetailsFragment"
+        android:label="Detalle del Edificio">
+        <argument
+            android:name="placeId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
