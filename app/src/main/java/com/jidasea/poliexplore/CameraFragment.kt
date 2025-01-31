@@ -1,11 +1,17 @@
 package com.jidasea.poliexplore
 
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.ar.core.*
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException
 import com.google.ar.sceneform.ArSceneView
@@ -15,6 +21,35 @@ class CameraFragment : Fragment() {
     private lateinit var arSceneView: ArSceneView
     private lateinit var session: Session
     private lateinit var augmentedImageDatabase: AugmentedImageDatabase
+    private lateinit var fragmentTitleTextView: TextView
+
+    private val requestMultiplePermissionsLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions[android.Manifest.permission.CAMERA] == true) {
+            // Permiso de cámara concedido
+            initializeARCore()
+        } else {
+            // Permiso de cámara denegado
+            fragmentTitleTextView.text = "Permiso de cámara denegado. No se puede usar ARCore."
+        }
+    }
+
+    private fun checkAndRequestPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionsToRequest.add(android.Manifest.permission.CAMERA)
+        }
+
+        if (permissionsToRequest.isNotEmpty())
+            requestMultiplePermissionsLauncher.launch(permissionsToRequest.toTypedArray())
+        else initializeARCore()
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,18 +62,28 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fragmentTitleTextView: TextView? = activity?.findViewById(R.id.fragment_title)
-        fragmentTitleTextView?.text = "Cámara de Realidad Aumentada"
+        fragmentTitleTextView = activity?.findViewById<TextView>(R.id.fragment_title)!!
+        fragmentTitleTextView.text = "Cámara de Realidad Aumentada"
 
-        // Inicializar ARCore
-        initializeARCore(fragmentTitleTextView)
+        if (ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permiso ya concedido, inicializar ARCore
+            initializeARCore()
+        } else {
+            // Solicitar permiso de la cámara
+            requestMultiplePermissionsLauncher.launch(arrayOf(android.Manifest.permission.CAMERA))
+        }
     }
 
-    private fun initializeARCore(fragmentTitleTextView: TextView?) {
+    private fun initializeARCore() {
         // Verificar si ARCore es compatible
         val availability = ArCoreApk.getInstance().checkAvailability(requireContext())
         if (availability.isSupported) {
             try {
+                showCardView(null)
                 // Crear una sesión de ARCore
                 session = Session(requireContext())
 
@@ -57,6 +102,7 @@ class CameraFragment : Fragment() {
                 // Configurar ARCore para usar la base de datos de imágenes
                 val config = Config(session)
                 config.augmentedImageDatabase = augmentedImageDatabase
+                config.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE // Set the correct UpdateMode
                 session.configure(config)
 
                 // Configurar el ArSceneView
@@ -72,7 +118,7 @@ class CameraFragment : Fragment() {
                             TrackingState.TRACKING -> {
                                 if (augmentedImage.name == "edificio") {
                                     // La imagen "edificio" fue detectada
-                                    showCardView(augmentedImage.centerPose)
+                                    showCardView(null)
                                 }
                             }
                             else -> {
@@ -84,29 +130,42 @@ class CameraFragment : Fragment() {
                 }
             } catch (e: UnavailableArcoreNotInstalledException) {
                 // ARCore no está instalado, mostrar un mensaje al usuario
-                fragmentTitleTextView?.text = "ARCore no está instalado. Por favor, instálalo desde Google Play Store."
+                fragmentTitleTextView.text = "ARCore no está instalado. Por favor, instálalo desde Google Play Store."
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         } else {
             // Mostrar un mensaje de error si ARCore no es compatible
-            fragmentTitleTextView?.text = "ARCore no es compatible con este dispositivo"
+            fragmentTitleTextView.text = "ARCore no es compatible con este dispositivo"
         }
     }
 
-    private fun showCardView(pose: Pose) {
+    private fun showCardView(pose: Pose?) {
         // Mostrar un CardView con información del edificio
-        val cardView = layoutInflater.inflate(R.layout.cardview_edificio, null) as androidx.cardview.widget.CardView
-        val layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        requireActivity().addContentView(cardView, layoutParams)
+        val cardView = layoutInflater.inflate(R.layout.cardview_edificio, null)
+        val navigateButton = cardView.findViewById<Button>(R.id.navigateButton)
+        cardView.id = R.id.cardViewEdificio // Asegúrate de que el ID coincide con el del diseño
+
+        // Configurar los LayoutParams para centrar el CardView
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+
+        navigateButton.setOnClickListener {
+            val fragment = BuildingDetailsFragment.newInstance(21)
+        }
+
+        // Agregar el CardView al FrameLayout
+        (requireActivity().findViewById<ViewGroup>(android.R.id.content) as FrameLayout).addView(cardView, layoutParams)
+        cardView.visibility = View.VISIBLE // Asegúrate de que la visibilidad está configurada a VISIBLE
     }
 
     private fun hideCardView() {
         // Ocultar el CardView
-        requireActivity().findViewById<androidx.cardview.widget.CardView>(R.id.cardViewEdificio)?.visibility = View.GONE
+        (requireActivity().findViewById<ViewGroup>(android.R.id.content) as FrameLayout).removeAllViews()
     }
 
     override fun onResume() {
