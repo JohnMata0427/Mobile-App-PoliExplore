@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.ar.core.*
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException
@@ -143,8 +143,7 @@ class CameraFragment : Fragment() {
     private fun showCardView(pose: Pose?) {
         // Mostrar un CardView con información del edificio
         val cardView = layoutInflater.inflate(R.layout.cardview_edificio, null)
-        val navigateButton = cardView.findViewById<Button>(R.id.navigateButton)
-        cardView.id = R.id.cardViewEdificio // Asegúrate de que el ID coincide con el del diseño
+        val navigateButton = cardView.findViewById<Button>(R.id.navigationButton)
 
         // Configurar los LayoutParams para centrar el CardView
         val layoutParams = FrameLayout.LayoutParams(
@@ -160,12 +159,13 @@ class CameraFragment : Fragment() {
 
         // Agregar el CardView al FrameLayout
         (requireActivity().findViewById<ViewGroup>(android.R.id.content) as FrameLayout).addView(cardView, layoutParams)
-        cardView.visibility = View.VISIBLE // Asegúrate de que la visibilidad está configurada a VISIBLE
+        cardView.visibility = View.VISIBLE
     }
 
     private fun hideCardView() {
         // Ocultar el CardView
-        (requireActivity().findViewById<ViewGroup>(android.R.id.content) as FrameLayout).removeAllViews()
+        val cardView = layoutInflater.inflate(R.layout.cardview_edificio, null)
+        cardView.visibility = View.GONE
     }
 
     override fun onResume() {
